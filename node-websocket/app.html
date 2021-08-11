@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let websocket = null;
+      window.onload = function () {
+          console.log(window)
+        if ("WebSocket" in window) {
+          websocket = new WebSocket("ws://127.0.0.1:3000");
+          // 监听ws连接
+          websocket.onopen = (e) => {
+            console.log("websocket is connection", e);
+          };
+
+          // 当ws收到消息之后触发回调
+          websocket.onmessage = (e) => {
+            console.log("message被触发", e);
+          };
+          // 监听ws关闭事件
+          websocket.onclose = (e) => {
+            console.log("websocket is closed\r\n", e);
+          };
+          // 监听ws错误事件
+          websocket.onerror = (e) => {
+            console.log("websocket is error\r\n", e);
+          };
+        }else{
+            console.error("您的浏览器不支持websocket，请更换浏览器再试")
+        }
+      };
+      function send() {
+        console.info("我要发消息拉");
+        websocket.send("hello");
+      }
+    </script>
+  </head>
+  <body>
+    <button onClick="send()">发送消息</button>
+  </body>
+</html>
