@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
-    <script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/4.1.3/socket.io.js"></script><script>
         let socket = null
         window.onload = function(){
-            socket = io('http://127.0.0.1:3000')
+            socket = io('http://47.106.21.200:3000')
             // console.log(socket)
             socket.on('connect',()=>{
                 console.log("成功链接服务端啦")
@@ -18,16 +17,24 @@
                 console.log("服务断开，尝试重新链接")
                 socket.connect()
             })
-            socket.on('msg',(data)=>{
-                console.log('收到msg',data)
+            socket.on('warning',(data)=>{
+                const app = document.getElementById('app')
+                console.log("app",app)
+                const img = document.createElement('img')
+                const da = JSON.parse(data)
+                console.log(da.Img)
+                img.setAttribute('src','data:image/png;base64,'+da.Img)
+                app.appendChild(img)
+                console.log(img)
+                console.log('收到msg',da)
             })
         }
         function send(){
             if( !socket ) {
                 console.error("还没有链接")
             }else{
-                console.log("开始发数据")
-                socket.emit('text','客户端发来数据')
+                console.log("开始发数据", socket)
+                socket.emit('Control','客户端发来数据')
             }
         }
         function hello(){
@@ -43,5 +50,6 @@
 <body>
     <button onclick='send()'>发送消息</button>
     <button onclick='hello()'>hello</button>
+    <div id='app'></div>
 </body>
 </html>

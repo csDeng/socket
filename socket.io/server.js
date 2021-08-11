@@ -17,9 +17,15 @@ io.on('connection', client => {
     client.on('text',(data)=>{
         console.log('text事件被触发',data)
     })
-    setInterval(()=>{
-        client.emit('msg',"我是服务端发来的数据")
-    }, 3000)
+    // setInterval(()=>{
+    //     console.log('开始发信息')
+    //     client.emit('msg',"我是服务端发来的数据")
+    // }, 10000)
     
 });
 server.listen(3000);
+
+/**
+ * @todo
+ * 因为使用小程序 socket.io 4监听不到所以回退到2
+ */
