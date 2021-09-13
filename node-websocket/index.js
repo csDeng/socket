@@ -31,6 +31,7 @@ const server = ws.createServer(function(con){
  * 服务端继续发消息，造成4077持续错误
  */
 function send(){
+    // server.connections  是当前已连接的所有前端服务
     server.connections.forEach(connection=>{
         connection.sendText('hahah')
     })

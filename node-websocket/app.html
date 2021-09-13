@@ -8,7 +8,9 @@
     <script>
       let websocket = null;
       window.onload = function () {
-          console.log(window)
+          // console.log(window)
+
+          // 检测当前浏览器是否支持websocket
         if ("WebSocket" in window) {
           websocket = new WebSocket("ws://127.0.0.1:3000");
           // 监听ws连接
